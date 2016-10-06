@@ -6,7 +6,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
-
 /**
  * Created by mdominguez on 22/09/16.
  */
@@ -22,6 +21,14 @@ public class Departamento implements Serializable {
     private Integer cantidadHabitaciones;
     private Integer cantidadCamas;
     private String telefonoPropietario;
+
+    public Boolean getNoFumador() {
+        return noFumador;
+    }
+
+    public void setNoFumador(Boolean noFumador) {
+        this.noFumador = noFumador;
+    }
 
     private Ciudad ciudad;
     private List<Reserva> reservas;
@@ -146,8 +153,8 @@ public class Departamento implements Serializable {
         Random rReservas = new Random();
         if(_FLAG_INICIALIZADO) return  _ALOJAMIENTOS_DISPONIBLES;
 
-        for(int i=0;i<100;i++){
-            Departamento aux = new Departamento(i+1);
+            for(int i=0;i<100;i++){
+                Departamento aux = new Departamento(i+1);
             _ALOJAMIENTOS_DISPONIBLES.add(aux);
             int cantidadReservasSimular = 1+rReservas.nextInt(5);
             for(int j=0;j<cantidadReservasSimular;j++){

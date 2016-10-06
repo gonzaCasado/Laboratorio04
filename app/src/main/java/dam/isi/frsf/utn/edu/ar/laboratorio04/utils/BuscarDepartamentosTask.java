@@ -33,18 +33,36 @@ public class BuscarDepartamentosTask extends AsyncTask<FormBusqueda,Integer,List
     @Override
     protected void onProgressUpdate(Integer... values) {
         listener.busquedaActualizada("departamento "+values[0]);
-
-
     }
 
     @Override
     protected List<Departamento> doInBackground(FormBusqueda... busqueda) {
+        // TODO implementar: buscar todos los departamentos del sistema e ir chequeando las condiciones 1 a 1.
+        // Si cumplen las condiciones agregarlo a los resultados.
+
         List<Departamento> todos = Departamento.getAlojamientosDisponibles();
         List<Departamento> resultado = new ArrayList<Departamento>();
         int contador = 0;
+        int cantidadHuespedes = busqueda[0].getHuespedes();
+        double precioMinimo = 0;
+        double precioMaximo = 2500;
         Ciudad ciudadBuscada = busqueda[0].getCiudad();
-        // TODO implementar: buscar todos los departamentos del sistema e ir chequeando las condiciones 1 a 1.
-        // si cumplen las condiciones agregarlo a los resultados.
+        Boolean permiteFumar = busqueda[0].getPermiteFumar();
+        if(busqueda[0].getPrecioMinimo() != null)
+            precioMinimo = busqueda[0].getPrecioMinimo();
+            if(busqueda[0].getPrecioMaximo() != null)
+            precioMaximo = busqueda[0].getPrecioMaximo();
+
+        for(int i = 0; i<todos.size(); i++){
+            Departamento departamento = todos.get(i);
+            if(departamento.getCiudad().equals(ciudadBuscada)){
+                if(permiteFumar && departamento.getNoFumador() || !permiteFumar && !departamento.getNoFumador())
+                    if(departamento.getCapacidadMaxima() >= cantidadHuespedes)
+                        if(departamento.getPrecio() >= precioMinimo && departamento.getPrecio() <= precioMaximo)
+                            resultado.add(departamento);
+            }
+        }
+        listener.busquedaFinalizada(resultado);
         return resultado;
     }
 }

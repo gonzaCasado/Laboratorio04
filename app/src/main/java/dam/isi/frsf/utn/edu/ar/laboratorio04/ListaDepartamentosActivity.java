@@ -54,6 +54,10 @@ public class ListaDepartamentosActivity extends AppCompatActivity implements Bus
     @Override
     public void busquedaFinalizada(List<Departamento> listaDepartamento) {
         //TODO implementar
+        tvEstadoBusqueda.setVisibility(View.GONE);
+        lista = listaDepartamento;
+        departamentosAdapter = new DepartamentoAdapter(ListaDepartamentosActivity.this,lista);
+        listaAlojamientos.setAdapter(departamentosAdapter);
     }
 
     @Override

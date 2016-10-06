@@ -76,14 +76,16 @@ public class MainActivity extends AppCompatActivity
         tvPrecioMaximo= (TextView ) findViewById(R.id.txtPrecioMax);
 
         btnBuscar = (Button) findViewById(R.id.btnBuscar);
-        btnBuscar.setOnClickListener(btnBusarListener);
+        btnBuscar.setOnClickListener(btnBuscarListener);
     }
 
-    private View.OnClickListener btnBusarListener = new View.OnClickListener() {
+    private View.OnClickListener btnBuscarListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             Intent i = new Intent(MainActivity.this,ListaDepartamentosActivity.class);
             frmBusq.setPermiteFumar(swFumadores.isSelected());
+            if(txtHuespedes.getText().toString().isEmpty()) frmBusq.setHuespedes(0);
+            else frmBusq.setHuespedes(Integer.parseInt(txtHuespedes.getText().toString()));
             i.putExtra("esBusqueda",true);
             i.putExtra("frmBusqueda",frmBusq);
             startActivity(i);
@@ -102,10 +104,8 @@ public class MainActivity extends AppCompatActivity
 
 
     private SeekBar.OnSeekBarChangeListener listenerSB =  new SeekBar.OnSeekBarChangeListener(){
-
         @Override
-        public void onProgressChanged(SeekBar seekBar, int progress,
-        boolean fromUser) {
+        public void onProgressChanged(SeekBar seekBar, int progress,boolean fromUser) {
             if(seekBar.getId()==R.id.precioMin) {
                 tvPrecioMinimo.setText("Precio Minimo "+progress);
                 frmBusq.setPrecioMinimo(Double.valueOf(progress));
