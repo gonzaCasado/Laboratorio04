@@ -4,7 +4,11 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -30,7 +34,7 @@ public class ListaDepartamentosActivity extends AppCompatActivity implements Bus
         lista= new ArrayList<>();
         listaAlojamientos= (ListView ) findViewById(R.id.listaAlojamientos);
         tvEstadoBusqueda = (TextView) findViewById(R.id.estadoBusqueda);
-
+        registerForContextMenu(listaAlojamientos);
     }
 
     @Override
@@ -50,7 +54,28 @@ public class ListaDepartamentosActivity extends AppCompatActivity implements Bus
         departamentosAdapter = new DepartamentoAdapter(ListaDepartamentosActivity.this,lista);
         listaAlojamientos.setAdapter(departamentosAdapter);
     }
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo info){
+        super.onCreateContextMenu(menu, view, info);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_contextual,menu);
 
+    }
+    @Override
+    public boolean onContextItemSelected(MenuItem item){
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        switch(item.getItemId()){
+            case R.id.reservar:
+                Intent i = new Intent(ListaDepartamentosActivity.this,AltaReservaActivity.class);
+                i.putExtra("reserva",DepartamentoAdapter.getDptoSeleccionado());
+                startActivity(i);
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+
+        }
+
+    }
     @Override
     public void busquedaFinalizada(List<Departamento> listaDepartamento) {
         //TODO implementar

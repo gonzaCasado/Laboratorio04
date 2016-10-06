@@ -37,8 +37,6 @@ public class BuscarDepartamentosTask extends AsyncTask<FormBusqueda,Integer,List
 
     @Override
     protected List<Departamento> doInBackground(FormBusqueda... busqueda) {
-        // TODO implementar: buscar todos los departamentos del sistema e ir chequeando las condiciones 1 a 1.
-        // Si cumplen las condiciones agregarlo a los resultados.
 
         List<Departamento> todos = Departamento.getAlojamientosDisponibles();
         List<Departamento> resultado = new ArrayList<Departamento>();

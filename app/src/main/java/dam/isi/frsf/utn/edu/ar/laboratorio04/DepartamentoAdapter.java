@@ -15,6 +15,7 @@ import dam.isi.frsf.utn.edu.ar.laboratorio04.modelo.Departamento;
 public class DepartamentoAdapter extends ArrayAdapter<Departamento> {
     private LayoutInflater inflater;
     private Context contexto;
+    public static int dptoSeleccionado;
 
     public DepartamentoAdapter(Context contexto, List<Departamento> items) {
         super(contexto, R.layout.fila, items);
@@ -22,7 +23,7 @@ public class DepartamentoAdapter extends ArrayAdapter<Departamento> {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         DecimalFormat df = new DecimalFormat("#.##");
         View row = convertView;
         if (row == null) row = inflater.inflate(R.layout.fila, parent, false);
@@ -34,7 +35,19 @@ public class DepartamentoAdapter extends ArrayAdapter<Departamento> {
         txtPrecio.setText("$" + (df.format(this.getItem(position).getPrecio())));
         TextView txtCapacidad = (TextView) row.findViewById(R.id.capacidadMax);
         txtCapacidad.setText(this.getItem(position).getCapacidadMaxima()+".");
+
+        row.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                dptoSeleccionado = getItem(position).getId();
+                return false;
+            }
+        });
+
         return (row);
 
+    }
+    public static int getDptoSeleccionado(){
+        return dptoSeleccionado;
     }
 }
