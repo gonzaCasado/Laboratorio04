@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,6 +69,7 @@ public class ListaDepartamentosActivity extends AppCompatActivity implements Bus
             case R.id.reservar:
                 Intent i = new Intent(ListaDepartamentosActivity.this,AltaReservaActivity.class);
                 i.putExtra("reserva",DepartamentoAdapter.getDptoSeleccionado());
+                i.putExtra("esReserva",true);
                 startActivity(i);
                 return true;
             default:

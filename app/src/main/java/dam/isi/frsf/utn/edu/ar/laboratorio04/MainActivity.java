@@ -28,6 +28,7 @@ import java.util.Arrays;
 
 import dam.isi.frsf.utn.edu.ar.laboratorio04.modelo.Ciudad;
 import dam.isi.frsf.utn.edu.ar.laboratorio04.utils.FormBusqueda;
+import dam.isi.frsf.utn.edu.ar.laboratorio04.utils.ListaReservas;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -45,6 +46,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        new ListaReservas();
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -174,6 +176,9 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_perfil:
                 break;
             case R.id.nav_reservas:
+                Intent i2 = new Intent(MainActivity.this,AltaReservaActivity.class);
+                i2.putExtra("esReserva",false );
+                startActivity(i2);
                 break;
             case R.id.nav_destinos:
                 break;

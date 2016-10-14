@@ -12,7 +12,7 @@ import java.util.List;
 
 import dam.isi.frsf.utn.edu.ar.laboratorio04.modelo.Departamento;
 
-public class DepartamentoAdapter extends ArrayAdapter<Departamento> {
+public class DepartamentoAdapter extends ArrayAdapter<Departamento>{
     private LayoutInflater inflater;
     private Context contexto;
     public static int dptoSeleccionado;

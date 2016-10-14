@@ -2,6 +2,7 @@ package dam.isi.frsf.utn.edu.ar.laboratorio04.modelo;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by mdominguez on 22/09/16.
@@ -15,6 +16,17 @@ public class Reserva implements Serializable {
     private Double precio;
     private Usuario usuario;
     private Boolean confirmada;
+  /*  private static List<Departamento> listaReservas;
+
+    public static List<Departamento> getListaReservas() {
+        return listaReservas;
+    }
+
+    public static void agregar(Departamento departamento) {
+        listaReservas.add(departamento);
+    }
+
+*/
 
     public Reserva(){}
 
