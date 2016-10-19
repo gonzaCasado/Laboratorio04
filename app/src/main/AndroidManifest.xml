@@ -20,6 +20,14 @@
         </activity>
         <activity android:name=".ListaDepartamentosActivity" />
         <activity android:name=".AltaReservaActivity"></activity>
+
+        <receiver
+            android:name=".utils.TestReceiver"
+            android:enabled="true"
+            android:exported="true">
+        <intent-filter><action android:name="dam.ejemplo.MensajeXYZ"/></intent-filter>
+        </receiver>
+
     </application>
 
 </manifest>

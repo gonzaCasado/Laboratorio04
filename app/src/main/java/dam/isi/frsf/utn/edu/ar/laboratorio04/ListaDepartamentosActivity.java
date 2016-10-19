@@ -67,10 +67,20 @@ public class ListaDepartamentosActivity extends AppCompatActivity implements Bus
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         switch(item.getItemId()){
             case R.id.reservar:
+
+                String nombreIntent= "curso.app.unaAccion";
+                Intent broadcastIntent= new Intent(nombreIntent);
+                broadcastIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                broadcastIntent.putExtra("message", "Un Mensaje");
+                sendBroadcast(broadcastIntent);
+
+
                 Intent i = new Intent(ListaDepartamentosActivity.this,AltaReservaActivity.class);
                 i.putExtra("reserva",DepartamentoAdapter.getDptoSeleccionado());
                 i.putExtra("esReserva",true);
                 startActivity(i);
+
+
                 return true;
             default:
                 return super.onContextItemSelected(item);
