@@ -19,13 +19,15 @@
             </intent-filter>
         </activity>
         <activity android:name=".ListaDepartamentosActivity" />
-        <activity android:name=".AltaReservaActivity"></activity>
+        <activity android:name=".AltaReservaActivity" />
 
         <receiver
             android:name=".utils.TestReceiver"
             android:enabled="true"
             android:exported="true">
-        <intent-filter><action android:name="dam.ejemplo.MensajeXYZ"/></intent-filter>
+            <intent-filter>
+                <action android:name="dam.ejemplo.MensajeXYZ" />
+            </intent-filter>
         </receiver>
 
     </application>
