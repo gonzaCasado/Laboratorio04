@@ -22,6 +22,7 @@ import java.util.ListIterator;
 
 import dam.isi.frsf.utn.edu.ar.laboratorio04.modelo.Departamento;
 import dam.isi.frsf.utn.edu.ar.laboratorio04.modelo.Reserva;
+import dam.isi.frsf.utn.edu.ar.laboratorio04.utils.AlarmService;
 import dam.isi.frsf.utn.edu.ar.laboratorio04.utils.BuscarDepartamentosTask;
 import dam.isi.frsf.utn.edu.ar.laboratorio04.utils.FormBusqueda;
 import dam.isi.frsf.utn.edu.ar.laboratorio04.utils.ListaReservas;
@@ -32,6 +33,8 @@ public class AltaReservaActivity extends AppCompatActivity {
     private ListView listaReservas;
     private DepartamentoAdapter reservasAdapter;
     private List<Departamento> lista;
+    Bundle extras;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,64 +44,49 @@ public class AltaReservaActivity extends AppCompatActivity {
         listaReservas = (ListView) findViewById(R.id.listaReservas);
         tvEstadoBusqueda = (TextView) findViewById(R.id.estadoBusqueda);
         registerForContextMenu(listaReservas);
+
     }
 
     @Override
+
     protected void onStart() {
         super.onStart();
-        Bundle extras = getIntent().getExtras();
-        Boolean esReserva = extras.getBoolean("esReserva");
-        if (esReserva) {
-            int id = extras.getInt("reserva");
-            List<Departamento> listaDepartamentos = Departamento.getAlojamientosDisponibles();
-            Departamento departamentoAReservar = new Departamento();
-            for (int i = 0; i < listaDepartamentos.size(); i++) {
-                if (listaDepartamentos.get(i).getId() == id) {
-                    departamentoAReservar = listaDepartamentos.get(i);
-                    break;
+        if (getIntent().getExtras() != null) {
+            extras = getIntent().getExtras();
+            Boolean esReserva = extras.getBoolean("esReserva");
+            if (esReserva) {
+                int id = extras.getInt("reserva");
+                List<Departamento> listaDepartamentos = Departamento.getAlojamientosDisponibles();
+                Departamento departamentoAReservar = new Departamento();
+                for (int i = 0; i < listaDepartamentos.size(); i++) {
+                    if (listaDepartamentos.get(i).getId() == id) {
+                        departamentoAReservar = listaDepartamentos.get(i);
+                        break;
+                    }
                 }
+
+                Calendar inicio = Calendar.getInstance();
+                Reserva r = new Reserva(1, inicio.getTime(), inicio.getTime(), departamentoAReservar);
+                r.setConfirmada(false);
+
+                ListaReservas.agregar(departamentoAReservar);
+
+                new AlarmService(getApplicationContext(), r);
+
+                lista = ListaReservas.getLista();
+            } else {
+                tvEstadoBusqueda.setVisibility(View.GONE);
+                lista = ListaReservas.getLista();
             }
-
-            Calendar inicio = Calendar.getInstance();
-            new Reserva(1, inicio.getTime(), inicio.getTime(), departamentoAReservar);
-            ListaReservas.agregar(departamentoAReservar);
-
-            //Acá tendria que disparar la alarma!
-            sendRepeatingAlarm(id);
-
-            lista = ListaReservas.getLista();
+            reservasAdapter = new DepartamentoAdapter(AltaReservaActivity.this, lista);
+            listaReservas.setAdapter(reservasAdapter);
         } else {
             tvEstadoBusqueda.setVisibility(View.GONE);
             lista = ListaReservas.getLista();
+            reservasAdapter = new DepartamentoAdapter(AltaReservaActivity.this, lista);
+            listaReservas.setAdapter(reservasAdapter);
         }
-        reservasAdapter = new DepartamentoAdapter(AltaReservaActivity.this, lista);
-        listaReservas.setAdapter(reservasAdapter);
     }
-
-    public void sendRepeatingAlarm(int idDepto) {
-        //long tiempoActual = System.currentTimeMillis();
-
-        Intent intent = new Intent(this, TestReceiver.class);
-        intent.putExtra("Depto",idDepto);
-        PendingIntent pIntent = this.getDistinctPendingIntent(intent, idDepto);
-        AlarmManager manager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
-        manager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 15 * 1000, pIntent);
-
-
-    }
-
-    private PendingIntent getDistinctPendingIntent(Intent intent, int i) {
-        PendingIntent pi = PendingIntent.getBroadcast(this, i, intent, 0);
-        return pi;
-    }
-
-/*    public void cancelRepeatingAlarm() {
-        Intent intent = new Intent(this, TestReceiver.class);
-        PendingIntent pi = this.getDistinctPendingIntent(intent, 1);
-        AlarmManager am = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
-        am.cancel(pi);
-    }*/
-
 }
 
 

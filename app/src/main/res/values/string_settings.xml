@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Preferencias Usuario -->
+    <string name="pref_usuario_titulo">Usuario</string>
+    <string name="pref_usuario_resumen">Tu nombre de usuario</string>
+
+    <string name="pref_mail_titulo">Mail</string>
+    <string name="pref_mail_resumen">Tu direccion de mail</string>
+
+    <string name="pref_ringstone_titulo">Ringtone</string>
+    <string name="pref_ringstone_resumen">Selecciona el ringtone</string>
+</resources>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Usuario de Twitter -->
+    <EditTextPreference
+        android:key="usuario"
+        android:title="@string/pref_usuario_titulo"
+        android:summary="@string/pref_usuario_resumen"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:defaultValue=""/>
+
+    <EditTextPreference
+        android:key="mail"
+        android:title="@string/pref_mail_titulo"
+        android:summary="@string/pref_mail_resumen"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:defaultValue=""/>
+
+    <RingtonePreference
+        android:key="ringtone"
+        android:title="@string/pref_ringstone_titulo"
+        android:summary="@string/pref_ringstone_resumen"
+        android:ringtoneType="notification"
+        android:defaultValue="content://settings/system/notification_sound" />
+</PreferenceScreen>
