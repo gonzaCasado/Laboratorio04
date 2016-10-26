@@ -26,7 +26,7 @@ public class AlarmService {
         PendingIntent pi = PendingIntent.getBroadcast(context,reserva.getId(),intent,0);
 
         AlarmManager am =(AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        am.setRepeating(AlarmManager.RTC_WAKEUP, 2000, 15*1000, pi);
+        am.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 2000, 15*1000, pi);
     }
 
     public static void cancelarAlarma(){
